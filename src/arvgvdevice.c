@@ -43,6 +43,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <glib-2.0/glib.h>
+#include <glib-2.0/gio/gsocket.h>
+#include "arvdevice.h"
+
 /* Shared data (main thread - heartbeat) */
 
 enum

@@ -76,6 +76,9 @@ enum {
 
 typedef struct _ArvGvStreamThreadData ArvGvStreamThreadData;
 
+#include <glib-2.0/glib.h>
+#include "arvstream.h"
+
 typedef struct {
 	GThread *thread;
 	ArvGvStreamThreadData *thread_data;
@@ -1193,12 +1196,16 @@ arv_gv_stream_constructed (GObject *object)
 	g_object_unref (local_address);
 
 	address_bytes = g_inet_address_to_bytes (interface_address);
-	arv_device_set_integer_feature_value (ARV_DEVICE (gv_device), "GevSCDA", g_htonl (*((guint32 *) address_bytes)), NULL);
+    arv_debug_stream ("[GvStream::stream_new] Orig. GevSCSP = %d",
+                      arv_device_get_integer_feature_value (ARV_DEVICE (gv_device), "GevSCSP", NULL));
+    arv_debug_stream ("[GvStream::stream_new] Orig. GevSCPHostPort = %d",
+                      arv_device_get_integer_feature_value (ARV_DEVICE (gv_device), "GevSCPHostPort", NULL));
+    arv_device_set_integer_feature_value (ARV_DEVICE (gv_device), "GevSCDA", g_htonl (*((guint32 *) address_bytes)), NULL);
 	arv_device_set_integer_feature_value (ARV_DEVICE (gv_device), "GevSCPHostPort", thread_data->stream_port, NULL);
 	thread_data->source_stream_port = arv_device_get_integer_feature_value (ARV_DEVICE (gv_device), "GevSCSP", NULL);
 
-	arv_debug_stream ("[GvStream::stream_new] Destination stream port = %d", thread_data->stream_port);
-	arv_debug_stream ("[GvStream::stream_new] Source stream port = %d", thread_data->source_stream_port);
+    arv_debug_stream ("[GvStream::stream_new] Destination stream port (GevSCPHostPort) = %d", thread_data->stream_port);
+    arv_debug_stream ("[GvStream::stream_new] Source stream port (GevSCSP) = %d", thread_data->source_stream_port);
 
 	arv_gv_stream_start_thread (ARV_STREAM (gv_stream));
 }
