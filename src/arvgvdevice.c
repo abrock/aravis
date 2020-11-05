@@ -613,7 +613,9 @@ auto_packet_size (ArvGvDevice *gv_device, gboolean exit_early, GError **error)
 
 	address_bytes = g_inet_address_to_bytes (interface_address);
 	arv_device_set_integer_feature_value (ARV_DEVICE (gv_device), "GevSCDA", g_htonl (*((guint32 *) address_bytes)), NULL);
-	arv_device_set_integer_feature_value (ARV_DEVICE (gv_device), "GevSCPHostPort", port, NULL);
+    arv_debug_stream ("[GvDevice::auto_packet_size] Orig. GevSCPHostPort = %d",
+                      arv_device_get_integer_feature_value (ARV_DEVICE (gv_device), "GevSCPHostPort", NULL));
+    arv_device_set_integer_feature_value (ARV_DEVICE (gv_device), "GevSCPHostPort", port, NULL);
 
 	g_clear_object (&local_address);
 	g_clear_object (&interface_socket_address);
