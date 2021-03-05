@@ -353,3 +353,7 @@ arv_gc_register_description_node_class_init (ArvGcRegisterDescriptionNodeClass *
 	dom_element_class->set_attribute = arv_gc_register_description_node_set_attribute;
 	dom_element_class->get_attribute = arv_gc_register_description_node_get_attribute;
 }
+
+gboolean is_known_legacy_endianess_camera(ArvGcRegisterDescriptionNode *node) {
+    return (0 == strcmp(node->model_name, "NSC1003CGIGE"));
+}

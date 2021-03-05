@@ -30,6 +30,8 @@
 #include <arvtypes.h>
 #include <arvgcfeaturenode.h>
 
+gboolean is_known_legacy_endianess_camera(ArvGcRegisterDescriptionNode * node);
+
 G_BEGIN_DECLS
 
 #define ARV_TYPE_GC_REGISTER_DESCRIPTION_NODE             (arv_gc_register_description_node_get_type ())

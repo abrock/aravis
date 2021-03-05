@@ -100,7 +100,9 @@ _use_legacy_endianness_mechanism (ArvGcPort *port, guint64 length)
 
 	document = arv_dom_node_get_owner_document (ARV_DOM_NODE (port));
 	register_description = ARV_GC_REGISTER_DESCRIPTION_NODE (arv_dom_document_get_document_element (document));
-
+    if (is_known_legacy_endianess_camera(register_description)) {
+        return 1;
+    }
 	return length == 4 && (arv_gc_register_description_node_compare_schema_version (register_description, 1, 1, 0) < 0);
 }
 
